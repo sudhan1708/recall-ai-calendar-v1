@@ -18,6 +18,7 @@ export default function UpcomingMeetings({
   onShowConnectionScreen,
 }: IUpcomingMeetingsProps) {
   const { meetings, refreshCalendar } = recallCalendar;
+  const [enabled, setEnabled] = useState(false)
   const [showOnlyRecordableMeetings, setShowOnlyRecordableMeetings] =
     useState(false);
   const [showSettings, setShowSettings] = useState<boolean>(false);
@@ -201,6 +202,7 @@ export default function UpcomingMeetings({
                             className="flex flex-col items-end"
                           >
                             <Switch
+                            
                               checked={meeting.will_record}
                               onChange={(value: boolean) => {
                                 recallCalendar.updateMeeting(meeting.id, value);
@@ -222,7 +224,7 @@ export default function UpcomingMeetings({
                                 )}
                               />
                             </Switch>
-                            <Switch.Label as="span" className="">
+                            <Switch.Label as="span" className="" >
                               <span className="text-xs font-medium text-gray-900">
                                 Record call?
                               </span>

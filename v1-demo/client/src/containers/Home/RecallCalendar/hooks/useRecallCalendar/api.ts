@@ -25,10 +25,12 @@ export async function makeRequest<T>({
   method,
   data,
 }: MakeRequestArgument): Promise<T> {
+  console.log("Method " + method + " url " + url)
   const res = await fetch(url, {
     method,
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "ff13318c1876229a35975b8574770a9085113014",
       ...(token ? { "X-RecallCalendarAuthToken": token } : {}),
     },
     ...(data ? { body: JSON.stringify(data) } : {}),

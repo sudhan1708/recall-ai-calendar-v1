@@ -70,7 +70,7 @@ export default function useRecallCalendar(
           setInitializeError("AUTH_TOKEN_NOT_FOUND");
           return;
         }
-
+        console.log("fetched auth token")
         await Promise.all([
           fetchUser({
             authToken,
@@ -142,6 +142,7 @@ export default function useRecallCalendar(
     connectCalendar: (platform: CalendarPlatform): void => {
       let redirectUri;
       let oAuthUrl;
+      localStorage.setItem("calenderAuthToken", token.data)
       if (platform === CalendarPlatform.GOOGLE) {
         redirectUri = buildUrl("google_oauth_callback/");
         oAuthUrl = buildGoogleOAuthUrl({
@@ -165,7 +166,6 @@ export default function useRecallCalendar(
       }
 
       window.open(oAuthUrl);
-
       const intervalId = setInterval(async () => {
         const user = await fetchUser({
           authToken: token.data,

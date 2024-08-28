@@ -57,10 +57,11 @@ export async function fetchToken({
 
   tokenDispatch({ type: TokenActionKind.FETCH_START });
   try {
+    console.log("fetching token")
     const response = await makeRequest<FetchTokenResponse>({
       url: authUrl,
       method: "POST",
-      data: { userId },
+      data: { user_id: userId },
     });
 
     if (response.token) {

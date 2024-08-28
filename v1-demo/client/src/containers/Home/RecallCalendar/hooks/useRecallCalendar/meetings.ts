@@ -1,6 +1,6 @@
 import type { CalendarMeeting } from "./models";
 import { makeRequest, buildUrl } from "./api";
-
+import { v4 as uuidv4 } from 'uuid';
 export enum MeetingsActionKind {
   FETCH_START = "FETCH_START",
   FETCH_SUCCESS = "FETCH_SUCCESS",
@@ -94,6 +94,7 @@ export async function fetchMeetings({
     });
 
     if (response?.length) {
+      console.log("meetings :" + JSON.stringify(response))
       meetingsDispatch({
         type: MeetingsActionKind.FETCH_SUCCESS,
         meetings: response,
@@ -157,11 +158,12 @@ export async function updateMeeting({
   meetingUpdateInProgressMap[meetingId] = true;
   meetingsDispatch({ type: MeetingsActionKind.RECORD_MEETING_START });
   try {
+    const botId = uuidv4()
     const response = await makeRequest<CalendarMeeting>({
       token: authToken,
       url: buildUrl(`meetings/${meetingId}/`),
       method: "PUT",
-      data: { override_should_record: overrideShouldRecord }
+      data: { override_should_record: overrideShouldRecord , bot_id: botId}
     });
 
     if (response?.id) {
